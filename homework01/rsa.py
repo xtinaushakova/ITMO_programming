@@ -33,7 +33,7 @@ def gcd(a, b):
     """
     while b:
         a, b = b, a % b
-    return a - b 
+    return a 
 
 
 def multiplicative_inverse(e, phi):
@@ -44,8 +44,7 @@ def multiplicative_inverse(e, phi):
     >>> multiplicative_inverse(7, 40)
     23
     """
-    # PUT YOUR CODE HERE
-    pass
+    
 
 
 def generate_keypair(p, q):
