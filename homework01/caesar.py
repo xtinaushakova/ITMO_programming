@@ -1,3 +1,6 @@
+import string
+letters = string.ascii_letters
+
 def encrypt_caesar(plaintext):
     """
     >>> encrypt_caesar("PYTHON")
@@ -9,7 +12,8 @@ def encrypt_caesar(plaintext):
     >>> encrypt_caesar("")
     ''
     """
-    # PUT YOUR CODE HERE
+
+    ciphertext = ''.join([letters[((letters.find(x) + 3) % 26) + 26 * x.isupper()] if x.isalpha() else x for x in plaintext])
     return ciphertext
 
 
@@ -24,5 +28,6 @@ def decrypt_caesar(ciphertext):
     >>> decrypt_caesar("")
     ''
     """
-    # PUT YOUR CODE HERE
+
+    plaintext = ''.join([letters[((letters.find(x) - 3) % 26) + 26 * x.isupper()] if x.isalpha() else x for x in ciphertext])
     return plaintext
