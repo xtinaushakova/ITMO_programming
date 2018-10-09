@@ -1,33 +1,39 @@
+'''
+    Реализация шифра Цезаря с произвольным сдвигом
+'''
+
 import string
-letters = string.ascii_letters
+LETTERS = string.ascii_letters
 
-def encrypt_caesar(plaintext):
+def encrypt_caesar(plaintext, step):
     """
-    >>> encrypt_caesar("PYTHON")
+    >>> encrypt_caesar("PYTHON", 3)
     'SBWKRQ'
-    >>> encrypt_caesar("python")
+    >>> encrypt_caesar("python", 3)
     'sbwkrq'
-    >>> encrypt_caesar("Python3.6")
+    >>> encrypt_caesar("Python3.6", 3)
     'Sbwkrq3.6'
-    >>> encrypt_caesar("")
+    >>> encrypt_caesar("", 6)
     ''
     """
 
-    ciphertext = ''.join([letters[((letters.find(x) + 3) % 26) + 26 * x.isupper()] if x.isalpha() else x for x in plaintext])
-    return ciphertext
+    ciphertext = [LETTERS[((LETTERS.find(x) + step) % 26) + 26 * x.isupper()] if x.isalpha() else x for x in plaintext]
+
+    return ''.join(ciphertext)
 
 
-def decrypt_caesar(ciphertext):
+def decrypt_caesar(ciphertext, step):
     """
-    >>> decrypt_caesar("SBWKRQ")
+    >>> decrypt_caesar("SBWKRQ", 3)
     'PYTHON'
-    >>> decrypt_caesar("sbwkrq")
+    >>> decrypt_caesar("sbwkrq", 3)
     'python'
-    >>> decrypt_caesar("Sbwkrq3.6")
+    >>> decrypt_caesar("Sbwkrq3.6", 3)
     'Python3.6'
-    >>> decrypt_caesar("")
+    >>> decrypt_caesar("", 3)
     ''
     """
 
-    plaintext = ''.join([letters[((letters.find(x) - 3) % 26) + 26 * x.isupper()] if x.isalpha() else x for x in ciphertext])
-    return plaintext
+    plaintext = [LETTERS[((LETTERS.find(x) - step) % 26) + 26 * x.isupper()] if x.isalpha() else x for x in ciphertext]
+
+    return ''.join(plaintext)
