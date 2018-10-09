@@ -1,5 +1,5 @@
 import random
-
+import math
 
 def is_prime(n):
     """
@@ -12,8 +12,12 @@ def is_prime(n):
     >>> is_prime(8)
     False
     """
-    # PUT YOUR CODE HERE
-    pass
+    result = True
+    for divisor in range(2, math.ceil(math.sqrt(n))):
+        if n % divisor == 0:
+            result = False
+
+    return result
 
 
 def gcd(a, b):
@@ -24,9 +28,12 @@ def gcd(a, b):
     3
     >>> gcd(3, 7)
     1
+    >>> gcd(0, 6)
+    6
     """
-    # PUT YOUR CODE HERE
-    pass
+    while b:
+        a, b = b, a % b
+    return a - b 
 
 
 def multiplicative_inverse(e, phi):
