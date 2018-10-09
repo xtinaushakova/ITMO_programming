@@ -5,7 +5,7 @@
 import string
 LETTERS = string.ascii_letters
 
-def encrypt_vigenere(plaintext, keyword):
+def encrypt_vigenere(plaintext : str, keyword : str) -> str:
     """
     >>> encrypt_vigenere("PYTHON", "A")
     'PYTHON'
@@ -25,7 +25,7 @@ def encrypt_vigenere(plaintext, keyword):
     return ciphertext
 
 
-def decrypt_vigenere(ciphertext, keyword):
+def decrypt_vigenere(ciphertext : str, keyword : str) -> str:
     """
     >>> decrypt_vigenere("PYTHON", "A")
     'PYTHON'
