@@ -52,15 +52,15 @@ def multiplicative_inverse(e, phi):
     x = 0
     y = 1
   
-    if (phi == 1) : 
+    if (phi == 1): 
         return 0
 
-    while (e > 1) : 
+    while (e > 1): 
         # k is div quotioent
         k = e // phi 
         
         # Go down table, find gcd
-        phi, e = e%phi, phi
+        phi, e = e % phi, phi
         
         # Change x and y
         x, y = y - k * x, x
@@ -70,8 +70,6 @@ def multiplicative_inverse(e, phi):
         y = y + phi0 
   
     return y 
-
-    
 
 
 def generate_keypair(p, q):
