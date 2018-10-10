@@ -12,6 +12,7 @@ def is_prime(n):
     >>> is_prime(8)
     False
     """
+
     result = True
     for divisor in range(2, math.ceil(math.sqrt(n))):
         if n % divisor == 0:
@@ -31,6 +32,7 @@ def gcd(a, b):
     >>> gcd(0, 6)
     6
     """
+
     while b:
         a, b = b, a % b
     return a 
@@ -39,11 +41,61 @@ def gcd(a, b):
 def multiplicative_inverse(e, phi):
     """
     Euclid's extended algorithm for finding the multiplicative
-    inverse of two numbers.
+    inverse of two numbers. Find x such that x * (e % phi) = 1
 
     >>> multiplicative_inverse(7, 40)
     23
     """
+
+    #remember phi
+    phi0 = phi
+
+    if (phi == 1): 
+        return 0
+
+    x = [0]
+    y = [1]
+    phi_div_e = []
+
+    while e > 1:
+        phi_div_e.append(phi//e)
+        phi, e = e, phi % e
+
+    phi_div_e.append(phi//e)
+    # Now go back up
+
+    for i in range(1, len(phi_div_e)):
+        x.append(i - 1)
+        y.append(x[i - 1] - y[i - 1] * phi_div_e[i])
+    '''
+    m0 = phi 
+    y = 0
+    x = 1
+  
+  
+    while (e > 1) : 
+  
+        # q is quotient 
+        q = e // phi 
+  
+        t = phi 
+  
+        # m is remainder now, process 
+        # same as Euclid's algo 
+        m = e % phi 
+        e = t 
+        t = y 
+  
+        # Update x and y 
+        y = x - q * y 
+        x = t 
+    '''
+    # Make x positive 
+    if (x[-1] < 0) : 
+        x[-1] = x[-1] + phi 
+  
+    #return d
+    return x[-1] 
     
 
 
@@ -53,11 +105,9 @@ def generate_keypair(p, q):
     elif p == q:
         raise ValueError('p and q cannot be equal')
 
-    # n = pq
-    # PUT YOUR CODE HERE
+    n = p * q
 
-    # phi = (p-1)(q-1)
-    # PUT YOUR CODE HERE
+    phi = (p - 1) * (q - 1)
 
     # Choose an integer e such that e and phi(n) are coprime
     e = random.randrange(1, phi)
