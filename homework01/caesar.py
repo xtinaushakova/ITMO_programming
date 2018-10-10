@@ -5,7 +5,7 @@
 import string
 LETTERS = string.ascii_letters
 
-def encrypt_caesar(plaintext : str, step : int) -> str:
+def encrypt_caesar(plaintext, step):
     """
     >>> encrypt_caesar("PYTHON", 3)
     'SBWKRQ'
@@ -22,7 +22,7 @@ def encrypt_caesar(plaintext : str, step : int) -> str:
     return ''.join(ciphertext)
 
 
-def decrypt_caesar(ciphertext : str, step : int) -> str:
+def decrypt_caesar(ciphertext, step):
     """
     >>> decrypt_caesar("SBWKRQ", 3)
     'PYTHON'
