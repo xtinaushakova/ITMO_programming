@@ -46,56 +46,31 @@ def multiplicative_inverse(e, phi):
     >>> multiplicative_inverse(7, 40)
     23
     """
-
-    #remember phi
-    phi0 = phi
-
-    if (phi == 1): 
+      
+    # Rememeber first phi for later
+    phi0 = phi 
+    x = 0
+    y = 1
+  
+    if (phi == 1) : 
         return 0
 
-    x = [0]
-    y = [1]
-    phi_div_e = []
-
-    while e > 1:
-        phi_div_e.append(phi//e)
-        phi, e = e, phi % e
-
-    phi_div_e.append(phi//e)
-    # Now go back up
-
-    for i in range(1, len(phi_div_e)):
-        x.append(i - 1)
-        y.append(x[i - 1] - y[i - 1] * phi_div_e[i])
-    '''
-    m0 = phi 
-    y = 0
-    x = 1
-  
-  
     while (e > 1) : 
+        # k is div quotioent
+        k = e // phi 
+        
+        # Go down table, find gcd
+        phi, e = e%phi, phi
+        
+        # Change x and y
+        x, y = y - k * x, x
+      
+    # If y is negative, make it positive 
+    if (y < 0) : 
+        y = y + phi0 
   
-        # q is quotient 
-        q = e // phi 
-  
-        t = phi 
-  
-        # m is remainder now, process 
-        # same as Euclid's algo 
-        m = e % phi 
-        e = t 
-        t = y 
-  
-        # Update x and y 
-        y = x - q * y 
-        x = t 
-    '''
-    # Make x positive 
-    if (x[-1] < 0) : 
-        x[-1] = x[-1] + phi 
-  
-    #return d
-    return x[-1] 
+    return y 
+
     
 
 
