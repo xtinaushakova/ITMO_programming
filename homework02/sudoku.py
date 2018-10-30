@@ -4,9 +4,8 @@ def read_sudoku(filename):
     grid = group(digits, 9)
     return grid
 
-
 def display(values):
-    """Вывод Судоку """
+    """Вывод сетки Судоку """
     width = 2
     line = '+'.join(['-' * (width * 3)] * 3)
     for row in range(9):
@@ -18,14 +17,15 @@ def display(values):
 
 def group(values, n):
     """
-    Сгруппировать значения values в список, состоящий из списков по n элементов
-
+    Функция группирует значения values в список, состоящий из списков по n элементов
+    
     >>> group([1,2,3,4], 2)
     [[1, 2], [3, 4]]
     >>> group([1,2,3,4,5,6,7,8,9], 3)
     [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
     """
-    pass
+    groups = [values[i:i + n] for i in range(0, len(values), n)]
+    return groups
 
 
 def get_row(values, pos):
@@ -146,5 +146,5 @@ if __name__ == '__main__':
     for fname in ['puzzle1.txt', 'puzzle2.txt', 'puzzle3.txt']:
         grid = read_sudoku(fname)
         display(grid)
-        solution = solve(grid)
-        display(solution)
+        #solution = solve(grid)
+        #display(solution)

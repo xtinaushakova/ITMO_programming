@@ -1,12 +1,3 @@
-import random
-
-
-# Запустить прогу
-# Либо скармливать ей файлы с судоку, либо
-# Generate sudoku?
-# Give solution
-
-
 def read_sudoku(filename):
     """ Прочитать Судоку из указанного файла """
     digits = [c for c in open(filename).read() if c in '123456789.']
