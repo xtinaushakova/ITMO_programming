@@ -55,7 +55,8 @@ def get_col(values, pos):
     >>> get_col([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (0, 2))
     ['3', '6', '9']
     """
-    return [i[pos[1]] for i in values]
+    col = pos[1]
+    return [row[col] for row in values]
 
 
 def get_block(values, pos):
@@ -69,11 +70,11 @@ def get_block(values, pos):
     >>> get_block(grid, (8, 8))
     ['2', '8', '.', '.', '.', '5', '.', '7', '9']
     """
-    i, j = pos
+    row, col = pos
     # Остатки от деления на 3 дадут верхнюю и левую границу блока - минимумы
-    top, left = 3 * (i // 3), 3 * (j // 3)
+    top, left = 3 * (row // 3), 3 * (col // 3)
     # 2 цикла for чтобы не было списка списков
-    block = [values[top + m][left + n] for m in range(3) for n in range(3)]
+    block = [values[top + bottom][left + right] for bottom in range(3) for right in range(3)]
     return block
 
 
@@ -88,7 +89,7 @@ def find_empty_positions(grid):
     (2, 0)
     """
     # Объединяем все списки в один
-    flat_list = [i for row in grid for i in row]
+    flat_list = [value for row in grid for value in row]
     # Если есть пустое место, вычисляем координату, иначе возращаем None
     if '.' in flat_list:
         # Находим номер свободной позиции в объединенном списке
@@ -137,9 +138,9 @@ def solve(grid):
     # Иначе находим координаты пустой позиции
     row, col = pos
     # Получаем список всех возможных значений, проверяем каждое
-    for i in find_possible_values(grid, pos):
+    for possible_value in find_possible_values(grid, pos):
         # Ставим число из возможных на пустое место pos
-        grid[row][col] = i
+        grid[row][col] = possible_value
         # Проверяем, есть ли потенциал у этого варианта решения
         possible_solution = solve(grid)
         if possible_solution:
@@ -162,12 +163,13 @@ def check_solution(solution):
             return False
     # Проверить все столбцы
     for col in range(len(solution)):
-        if set(get_col(0, col)) != etalon:
+        pos = (0, col)
+        if set(get_col(solution, pos)) != etalon:
             return False
     # Проверить все блоки
-    for i in range(0, len(solution), 3):
-        for j in range(0, len(solution), 3):
-            pos = (i, j)
+    for row in range(0, len(solution), 3):
+        for col in range(0, len(solution), 3):
+            pos = (row, col)
             block = get_block(solution, pos)
             if set(block) != etalon:
                 return False
@@ -199,10 +201,10 @@ def generate_sudoku(N):
     """
     # На практике паззл сначала прорешивается, потом из него выкалываются точки
     # Создадим пустое поле
-    grid = [['.'] * 9] * 9
+    grid = [['.'] * 9 for n in range(9)]
 
     # Прорешаем его
-    grid = solve(grid)
+    grid = solve(grid) 
     # Выколем 81 - N точек
     empties = 81 - N
     # Если N <= 0, просто возвращаем grid
