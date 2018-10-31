@@ -85,8 +85,67 @@ def find_empty_positions(grid):
     """
     # Объединяем все списки в один
     flat_list = [i for row in grid for i in row]
-    # Находим номер свободной позиции в объединенном списке
-    numero = flat_list.index('.')
-    # Вычисляем координаты свободной позиции в сетке через mod и div
-    row, col = numero//len(grid), numero % len(grid)
-    return (row, col)
+    
+    # Если есть пустое место, вычисляем координату, иначе возращаем None
+    if '.' in flat_list:
+        # Находим номер свободной позиции в объединенном списке
+        numero = flat_list.index('.')
+        # Вычисляем координаты свободной позиции в сетке через mod и div
+        row, col = numero//len(grid), numero % len(grid)
+        return (row, col)
+    return None
+
+def find_possible_values(grid, pos):
+    """ Вернуть множество возможных значения для указанной позиции
+
+    >>> grid = read_sudoku('puzzle1.txt')
+    >>> values = find_possible_values(grid, (0,2))
+    >>> values == {'1', '2', '4'}
+    True
+    >>> values = find_possible_values(grid, (4,7))
+    >>> values == {'2', '5', '9'}
+    True
+    """
+    all_possible = set('123456789')
+    row = set(get_row(grid, pos))
+    col = set(get_col(grid, pos))
+    block = set(get_block(grid, pos))
+    return  all_possible - row - col - block
+
+def solve(grid):
+    """ Решение пазла, заданного в grid """
+    """ Как решать Судоку?
+        1. Найти свободную позицию
+        2. Найти все возможные значения, которые могут находиться на этой позиции
+        3. Для каждого возможного значения:
+            3.1. Поместить это значение на эту позицию
+            3.2. Продолжить решать оставшуюся часть пазла
+
+    >>> grid = read_sudoku('puzzle1.txt')
+    >>> solve(grid)
+    [['5', '3', '4', '6', '7', '8', '9', '1', '2'], ['6', '7', '2', '1', '9', '5', '3', '4', '8'], ['1', '9', '8', '3', '4', '2', '5', '6', '7'], ['8', '5', '9', '7', '6', '1', '4', '2', '3'], ['4', '2', '6', '8', '5', '3', '7', '9', '1'], ['7', '1', '3', '9', '2', '4', '8', '5', '6'], ['9', '6', '1', '5', '3', '7', '2', '8', '4'], ['2', '8', '7', '4', '1', '9', '6', '3', '5'], ['3', '4', '5', '2', '8', '6', '1', '7', '9']]
+    """
+    # Если нет пустых позиций, выводим готовое решение, иначе рекурсивно прорешиваем
+    if find_empty_positions(grid) == None:
+        return(grid)
+    # Иначе находим координаты пустой позиции
+    pos = find_empty_positions(grid)
+    row, col = pos
+    # Получаем список всех возможных значений, проверяем каждое
+    values = find_possible_values(grid, pos)
+    for i in values:
+        # Ставим число из возможных на пустое место pos
+        grid[row][col] = i
+        # Проверяем, есть ли потенциал у этого варианта решения
+        possible_solution = solve(grid)
+        if solve(possible_solution) is True:
+            return possible_solution
+        # Подходит, оставляем это число, идем к следующей пустой позиции
+    # Не подошло, оставлям позицию пустой и пробуем другое число
+        grid[row][col] = '.'
+        return None
+
+
+
+
+
