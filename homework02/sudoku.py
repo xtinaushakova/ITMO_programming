@@ -1,10 +1,12 @@
 from random import randint
 
+
 def read_sudoku(filename):
     """ Прочитать Судоку из указанного файла """
     digits = [c for c in open(filename).read() if c in '123456789.']
     grid = group(digits, 9)
     return grid
+
 
 def display(values):
     """Вывод сетки Судоку """
@@ -20,7 +22,7 @@ def display(values):
 def group(values, n):
     """
     Функция группирует значения values в список, состоящий из списков по n элементов
-    
+
     >>> group([1,2,3,4], 2)
     [[1, 2], [3, 4]]
     >>> group([1,2,3,4,5,6,7,8,9], 3)
@@ -28,6 +30,7 @@ def group(values, n):
     """
     groups = [values[i:i + n] for i in range(0, len(values), n)]
     return groups
+
 
 def get_row(values, pos):
     """ Возвращает все значения для номера строки, указанной в pos
@@ -41,6 +44,7 @@ def get_row(values, pos):
     """
     return values[pos[0]]
 
+
 def get_col(values, pos):
     """ Возвращает все значения для номера столбца, указанного в pos
 
@@ -52,6 +56,7 @@ def get_col(values, pos):
     ['3', '6', '9']
     """
     return [i[pos[1]] for i in values]
+
 
 def get_block(values, pos):
     """ Возвращает все значения из квадрата, в который попадает позиция pos
@@ -70,6 +75,7 @@ def get_block(values, pos):
     # 2 цикла for чтобы не было списка списков
     block = [values[top + m][left + n] for m in range(3) for n in range(3)]
     return block
+
 
 def find_empty_positions(grid):
     """ Найти первую свободную позицию в пазле
@@ -92,6 +98,7 @@ def find_empty_positions(grid):
         return (row, col)
     return None
 
+
 def find_possible_values(grid, pos):
     """ Вернуть множество возможных значения для указанной позиции
 
@@ -107,7 +114,8 @@ def find_possible_values(grid, pos):
     row = set(get_row(grid, pos))
     col = set(get_col(grid, pos))
     block = set(get_block(grid, pos))
-    return  all_possible - row - col - block
+    return all_possible - row - col - block
+
 
 def solve(grid):
     """ Решение пазла, заданного в grid """
@@ -165,6 +173,7 @@ def check_solution(solution):
                 return False
     # Все тесты пройдены - вернуть True
     return True
+
 
 if __name__ == '__main__':
     for fname in ['puzzle1.txt', 'puzzle2.txt', 'puzzle3.txt']:
