@@ -1,3 +1,4 @@
+from random import randint
 #pep
 #annotations
 #mypy
@@ -126,24 +127,24 @@ def solve(grid):
     [['5', '3', '4', '6', '7', '8', '9', '1', '2'], ['6', '7', '2', '1', '9', '5', '3', '4', '8'], ['1', '9', '8', '3', '4', '2', '5', '6', '7'], ['8', '5', '9', '7', '6', '1', '4', '2', '3'], ['4', '2', '6', '8', '5', '3', '7', '9', '1'], ['7', '1', '3', '9', '2', '4', '8', '5', '6'], ['9', '6', '1', '5', '3', '7', '2', '8', '4'], ['2', '8', '7', '4', '1', '9', '6', '3', '5'], ['3', '4', '5', '2', '8', '6', '1', '7', '9']]
     """
     # Если нет пустых позиций, выводим готовое решение, иначе рекурсивно прорешиваем
-    if find_empty_positions(grid) == None:
-        return(grid)
-    # Иначе находим координаты пустой позиции
     pos = find_empty_positions(grid)
+    if not pos:
+        return grid
+    # Иначе находим координаты пустой позиции
     row, col = pos
     # Получаем список всех возможных значений, проверяем каждое
-    values = find_possible_values(grid, pos)
-    for i in values:
+    for i in find_possible_values(grid, pos):
         # Ставим число из возможных на пустое место pos
         grid[row][col] = i
         # Проверяем, есть ли потенциал у этого варианта решения
         possible_solution = solve(grid)
-        if solve(possible_solution) is True:
+        if possible_solution:
             return possible_solution
         # Подходит, оставляем это число, идем к следующей пустой позиции
     # Не подошло, оставлям позицию пустой и пробуем другое число
-        grid[row][col] = '.'
-        return None
+    grid[row][col] = '.'
+    return None
+
 
 def check_solution(solution):
     """ Если решение solution верно, то вернуть True, в противном случае False """
@@ -169,6 +170,9 @@ def check_solution(solution):
     # Все тесты пройдены - вернуть True
     return True
 
-
-
-
+if __name__ == '__main__':
+    for fname in ['puzzle1.txt', 'puzzle2.txt', 'puzzle3.txt']:
+        grid = read_sudoku(fname)
+        display(grid)
+        solution = solve(grid)
+        display(solution)
