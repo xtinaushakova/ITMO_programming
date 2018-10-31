@@ -145,6 +145,29 @@ def solve(grid):
         grid[row][col] = '.'
         return None
 
+def check_solution(solution):
+    """ Если решение solution верно, то вернуть True, в противном случае False """
+    # TODO: Add doctests with bad puzzles
+    # На вход подается список рядов
+    # Проверка - сравнение сета с сетом эталона. Эталон:
+    etalon = set('123456789')
+    # Проверить все ряды
+    for row in solution:
+        if set(row) != etalon:
+            return False
+    # Проверить все столбцы
+    for col in range(len(solution)):
+        if set(get_col(0, col)) != etalon:
+            return False
+    # Проверить все блоки
+    for i in range(0, len(solution), 3):
+        for j in range(0, len(solution), 3):
+            pos = (i, j)
+            block = get_block(solution, pos)
+            if set(block) != etalon:
+                return False
+    # Все тесты пройдены - вернуть True
+    return True
 
 
 
