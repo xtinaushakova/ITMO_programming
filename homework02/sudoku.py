@@ -1,7 +1,4 @@
 from random import randint
-#pep
-#annotations
-#mypy
 
 def read_sudoku(filename):
     """ Прочитать Судоку из указанного файла """
@@ -42,7 +39,7 @@ def get_row(values, pos):
     >>> get_row([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (2, 0))
     ['.', '8', '9']
     """
-    return values[pos[0]] 
+    return values[pos[0]]
 
 def get_col(values, pos):
     """ Возвращает все значения для номера столбца, указанного в pos
@@ -54,7 +51,7 @@ def get_col(values, pos):
     >>> get_col([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (0, 2))
     ['3', '6', '9']
     """
-    return [i[pos[1]] for i in values] 
+    return [i[pos[1]] for i in values]
 
 def get_block(values, pos):
     """ Возвращает все значения из квадрата, в который попадает позиция pos
@@ -68,7 +65,7 @@ def get_block(values, pos):
     ['2', '8', '.', '.', '.', '5', '.', '7', '9']
     """
     i, j = pos
-    # Остатки от деления на 3 дадут верхнюю и левую границу блока - минимумы 
+    # Остатки от деления на 3 дадут верхнюю и левую границу блока - минимумы
     top, left = 3 * (i // 3), 3 * (j // 3)
     # 2 цикла for чтобы не было списка списков
     block = [values[top + m][left + n] for m in range(3) for n in range(3)]
@@ -86,7 +83,6 @@ def find_empty_positions(grid):
     """
     # Объединяем все списки в один
     flat_list = [i for row in grid for i in row]
-    
     # Если есть пустое место, вычисляем координату, иначе возращаем None
     if '.' in flat_list:
         # Находим номер свободной позиции в объединенном списке
