@@ -89,13 +89,12 @@ def find_empty_positions(grid: List[List[str]]) -> Any[Tuple[int, int], None]:
     (2, 0)
     """
     # Объединяем все списки в один
-    flat_list = [value for row in grid for value in row]
-    # Если есть пустое место, вычисляем координату, иначе возращаем None
-    if '.' in flat_list:
+    flattened_grid = [value for row in grid for value in row]
+    if '.' in flattened_grid:
         # Находим номер свободной позиции в объединенном списке
-        numero = flat_list.index('.')
+        empty_pos = flattened_grid.index('.')
         # Вычисляем координаты свободной позиции в сетке через mod и div
-        row, col = numero//len(grid), numero % len(grid)
+        row, col = empty_pos//len(grid), empty_pos % len(grid)
         return (row, col)
     return None
 
@@ -131,49 +130,38 @@ def solve(grid: List[List[str]]) -> Any[List[List[str]], None]:
     >>> solve(grid)
     [['5', '3', '4', '6', '7', '8', '9', '1', '2'], ['6', '7', '2', '1', '9', '5', '3', '4', '8'], ['1', '9', '8', '3', '4', '2', '5', '6', '7'], ['8', '5', '9', '7', '6', '1', '4', '2', '3'], ['4', '2', '6', '8', '5', '3', '7', '9', '1'], ['7', '1', '3', '9', '2', '4', '8', '5', '6'], ['9', '6', '1', '5', '3', '7', '2', '8', '4'], ['2', '8', '7', '4', '1', '9', '6', '3', '5'], ['3', '4', '5', '2', '8', '6', '1', '7', '9']]
     """
-    # Если нет пустых позиций, выводим готовое решение, иначе рекурсивно прорешиваем
     pos = find_empty_positions(grid)
     if not pos:
         return grid
-    # Иначе находим координаты пустой позиции
     row, col = pos
-    # Получаем список всех возможных значений, проверяем каждое
     for possible_value in find_possible_values(grid, pos):
-        # Ставим число из возможных на пустое место pos
         grid[row][col] = possible_value
-        # Проверяем, есть ли потенциал у этого варианта решения
         possible_solution = solve(grid)
         if possible_solution:
             return possible_solution
-        # Подходит, оставляем это число, идем к следующей пустой позиции
-    # Не подошло, оставлям позицию пустой и пробуем другое число
     grid[row][col] = '.'
     return None
 
 
 def check_solution(solution: List[List[str]]) -> bool:
     """ Если решение solution верно, то вернуть True, в противном случае False """
-    # TODO: Add doctests with bad puzzles
-    # На вход подается список рядов
-    # Проверка - сравнение сета с сетом эталона. Эталон:
-    etalon = set('123456789')
+    all_possible = set('123456789')
     # Проверить все ряды
     for row in solution:
-        if set(row) != etalon:
+        if set(row) != all_possible:
             return False
     # Проверить все столбцы
     for col in range(len(solution)):
         pos = (0, col)
-        if set(get_col(solution, pos)) != etalon:
+        if set(get_col(solution, pos)) != all_possible:
             return False
     # Проверить все блоки, где i, j - индексы строк и столбцов
     for i in range(0, len(solution), 3):
         for j in range(0, len(solution), 3):
             pos = (i, j)
             block = get_block(solution, pos)
-            if set(block) != etalon:
+            if set(block) != all_possible:
                 return False
-    # Все тесты пройдены - вернуть True
     return True
 
 
@@ -200,18 +188,12 @@ def generate_sudoku(N: int) -> List[List[str]]:
     True
     """
     # На практике паззл сначала прорешивается, потом из него выкалываются точки
-    # Создадим пустое поле
     grid = [['.'] * 9 for n in range(9)]
-
-    # Прорешаем его
     grid = solve(grid) 
-    # Выколем 81 - N точек
     empties = 81 - N
-    # Если N <= 0, просто возвращаем grid
     if empties > 0:
         while empties:
             row, col = randint(0, 8), randint(0, 8)
-            # Если не пусто - выкалываем
             if grid[row][col] != '.':
                 grid[row][col] = '.'
                 empties -= 1
