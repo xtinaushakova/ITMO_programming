@@ -78,7 +78,7 @@ def get_block(values: List[List[str]], pos: Tuple[int, int]) -> List[str]:
     return block
 
 
-def find_empty_positions(grid: List[List[str]]) -> Any[Tuple[int, int], None]:
+def find_empty_positions(grid: List[List[str]]) -> Optional[Tuple[int, int]]:
     """ Найти первую свободную позицию в пазле
 
     >>> find_empty_positions([['1', '2', '.'], ['4', '5', '6'], ['7', '8', '9']])
@@ -117,7 +117,7 @@ def find_possible_values(grid: List[List[str]], pos: Tuple[int, int]) -> Set[str
     return all_possible - row - col - block
 
 
-def solve(grid: List[List[str]]) -> Any[List[List[str]], None]:
+def solve(grid: List[List[str]]) -> Optional[List[List[str]]]:
     """ Решение пазла, заданного в grid """
     """ Как решать Судоку?
         1. Найти свободную позицию
