@@ -1,2 +1,2 @@
-time
-telebot
+requests==2.10.0
+PyTelegramBotAPI==2.2.3

@@ -8,7 +8,7 @@ Block = List[Digit]
 Grid = List[Row]
 Pos = Tuple[int,int]
 
-def read_sudoku(filename: str) -> Grid: 
+def read_sudoku(filename: str) -> Grid:
     """ Прочитать Судоку из указанного файла """
     digits = [c for c in open(filename).read() if c in '123456789.']
     grid = group(digits, 9)
