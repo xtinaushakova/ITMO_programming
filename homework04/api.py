@@ -28,16 +28,22 @@ def get(url, params={}, timeout=5, max_retries=5, backoff_factor=0.3):
 
 
 
-def get_friends(user_id, fields):
-    """ Вернуть данных о друзьях пользователя
-
-    :param user_id: идентификатор пользователя, список друзей которого нужно получить
-    :param fields: список полей, которые нужно получить для каждого пользователя
-    """
+def get_friends(user_id, fields=''):
+    """ Returns a list of user IDs or detailed\
+    information about a user's friends """
     assert isinstance(user_id, int), "user_id must be positive integer"
     assert isinstance(fields, str), "fields must be string"
     assert user_id > 0, "user_id must be positive integer"
-    # PUT YOUR CODE HERE
+    query_params = {
+        'access_token': config.get("ACCESS_TOKEN"),
+        'user_id': user_id,
+        'fields': fields,
+        'version': config.get('VERSION')
+    }
+    url = "{}/friends.get".format(config.get("DOMAIN"))
+    response = get(url, params=query_params)
+
+    return response.json()
 
 
 def age_predict(user_id):
@@ -65,7 +71,7 @@ def messages_get_history(user_id, offset=0, count=200):
     assert offset >= 0, "user_id must be positive integer"
     assert count >= 0, "user_id must be positive integer"
     
-    
+
 
 
 def count_dates_from_messages(messages):
