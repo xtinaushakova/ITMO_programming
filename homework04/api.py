@@ -1,13 +1,7 @@
 import requests
 from datetime import datetime
 import plotly
-
-
-config = {
-    'VK_ACCESS_TOKEN': 'Tокен доступа для ВК',
-    'PLOTLY_USERNAME': 'Имя пользователя Plot.ly',
-    'PLOTLY_API_KEY': 'Ключ доступа Plot.ly'
-}
+from config import config
 
 
 def get(url, params={}, timeout=5, max_retries=5, backoff_factor=0.3):
@@ -19,7 +13,19 @@ def get(url, params={}, timeout=5, max_retries=5, backoff_factor=0.3):
     :param max_retries: максимальное число повторных запросов
     :param backoff_factor: коэффициент экспоненциального нарастания задержки
     """
-    # PUT YOUR CODE HERE
+    for n in range(max_retries):
+        try:
+            response = requests.get(query, params=params, timeout=timeout)
+            content_type = response.headers.get('Content-Type')
+            if not content_type == "application/json; charset=utf-8":
+                raise
+            return response
+        except requests.exceptions.RequestException:
+            if n == max_retries - 1:
+                raise
+            backoff_value = backoff_factor * (2 ** n)
+            time.sleep(backoff_value)
+
 
 
 def get_friends(user_id, fields):
@@ -46,7 +52,7 @@ def age_predict(user_id):
     # PUT YOUR CODE HERE
 
 
-def messages_get_history(user_id, offset=0, count=20):
+def messages_get_history(user_id, offset=0, count=200):
     """ Получить историю переписки с указанным пользователем
 
     :param user_id: идентификатор пользователя, с которым нужно получить историю переписки
@@ -58,7 +64,8 @@ def messages_get_history(user_id, offset=0, count=20):
     assert isinstance(offset, int), "offset must be positive integer"
     assert offset >= 0, "user_id must be positive integer"
     assert count >= 0, "user_id must be positive integer"
-    # PUT YOUR CODE HERE
+    
+    
 
 
 def count_dates_from_messages(messages):
