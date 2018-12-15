@@ -1,1 +1,1 @@
-[[https://github.com/curiousfreckles/cs102/tree/master/homework04/friendNetwork.png|alt=octocat]]
+![alt text](https://github.com/curiousfreckles/cs102/tree/master/homework04/friendNetwork.png)
