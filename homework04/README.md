@@ -1,1 +1,1 @@
-![alt text](cs102/homework04/friendNetwork.png)
+[[https://github.com/curiousfreckles/cs102/tree/master/homework04/friendNetwork.png|alt=octocat]]
