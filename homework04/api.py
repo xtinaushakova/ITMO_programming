@@ -1,14 +1,25 @@
 import requests
-from datetime import datetime
-import plotly
+import time
 from config import config
+from requests import exceptions
 
 
-def get(url, params={}, timeout=5, max_retries=5, backoff_factor=0.3):
+"""
+class MyException(Exception):
+    pass
+class JSONException(MyException):
+    pass
+"""
+
+#def get_token():
+#    python access_token.py 6741948 -s friends,messages
+#    https://oauth.vk.com/blank.html#access_token=6f43877ecdad6211c7ff885712558b2c16e0b35f346501424e419ea3a44b7e5b496edca21033ed74f89dd&expires_in=86400&user_id=59914914
+#    config['VK_ACCESS_TOKEN'] == 
+
+
+def get(query, params={}, timeout=5, max_retries=5, backoff_factor=0.3):
     """ Выполнить GET-запрос
-
-    :param url: адрес, на который необходимо выполнить запрос
-    :param params: параметры запроса
+    :param query: тело GET запроса
     :param timeout: максимальное время ожидания ответа от сервера
     :param max_retries: максимальное число повторных запросов
     :param backoff_factor: коэффициент экспоненциального нарастания задержки
@@ -27,7 +38,6 @@ def get(url, params={}, timeout=5, max_retries=5, backoff_factor=0.3):
             time.sleep(backoff_value)
 
 
-
 def get_friends(user_id, fields=''):
     """ Returns a list of user IDs or detailed\
     information about a user's friends """
@@ -35,75 +45,46 @@ def get_friends(user_id, fields=''):
     assert isinstance(fields, str), "fields must be string"
     assert user_id > 0, "user_id must be positive integer"
     query_params = {
-        'access_token': config.get("ACCESS_TOKEN"),
+        'access_token': config.get("VK_ACCESS_TOKEN"),
         'user_id': user_id,
         'fields': fields,
-        'version': config.get('VERSION')
+        'v': config.get('VERSION')
     }
     url = "{}/friends.get".format(config.get("DOMAIN"))
     response = get(url, params=query_params)
-
     return response.json()
 
 
-def age_predict(user_id):
-    """ Наивный прогноз возраста по возрасту друзей
+def get_message_history(user_id: int, offset=0, count=200) -> dict:
 
-    Возраст считается как медиана среди возраста всех друзей пользователя
-
-    :param user_id: идентификатор пользователя
-    """
-    assert isinstance(user_id, int), "user_id must be positive integer"
-    assert user_id > 0, "user_id must be positive integer"
-    # PUT YOUR CODE HERE
-
-
-def messages_get_history(user_id, offset=0, count=200):
-    """ Получить историю переписки с указанным пользователем
-
-    :param user_id: идентификатор пользователя, с которым нужно получить историю переписки
-    :param offset: смещение в истории переписки
-    :param count: число сообщений, которое нужно получить
-    """
     assert isinstance(user_id, int), "user_id must be positive integer"
     assert user_id > 0, "user_id must be positive integer"
     assert isinstance(offset, int), "offset must be positive integer"
     assert offset >= 0, "user_id must be positive integer"
     assert count >= 0, "user_id must be positive integer"
-    
-
-
-
-def count_dates_from_messages(messages):
-    """ Получить список дат и их частот
-
-    :param messages: список сообщений
-    """
-    # PUT YOUR CODE HERE
-
-
-def plotly_messages_freq(freq_list):
-    """ Построение графика с помощью Plot.ly
-
-    :param freq_list: список дат и их частот
-    """
-    # PUT YOUR CODE HERE
-
-
-def get_network(users_ids, as_edgelist=True):
-    # PUT YOUR CODE HERE
-
-
-def plot_graph(graph):
-    # PUT YOUR CODE HERE
-
-#import matplotlib
-#matplotlib.use('Agg')
-#import matplotlib.pyplot as plt
-#fig = plt.figure()
-#ax = fig.add_subplot(111)
-#ax.plot([1,2,3])
-#fig.savefig('test.png')
-
-if __name__ == '__main__':
-    #get.friends
+    query_params = {
+        'domain': config.get("DOMAIN"),
+        'access_token': config.get("VK_ACCESS_TOKEN"),
+        'user_id': user_id,
+        'offset': offset,
+        'count': count,
+        'version': config.get("VERSION")
+    }
+    messages = []
+    i = 0
+    while i < count:
+        if (i / 200) % 3 == 0 and i:
+            time.sleep(1)
+        if count - i <= 200:
+            query_params['count'] = count - i
+        url = "{domain}/messages.getHistory?offset={offset}&count={count}&user_id={user_id}&" \
+              "access_token={access_token}&v={version}".format(**query_params)
+        response = requests.get(url)
+        json_doc = response.json()
+        fail = json_doc.get('error')
+        if fail:
+            raise Exception(json_doc['error']['error_msg'])
+        messages.extend(json_doc['response']['items'])
+        i += 200
+        query_params['offset'] += i
+    return messages
