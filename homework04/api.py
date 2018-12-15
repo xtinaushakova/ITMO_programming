@@ -2,22 +2,13 @@ import requests
 import time
 from config import config
 from requests import exceptions
+from typing import *
 
+JSON = Dict[Any, Any]
+Response = JSON
+Messages = List
 
-"""
-class MyException(Exception):
-    pass
-class JSONException(MyException):
-    pass
-"""
-
-#def get_token():
-#    python access_token.py 6741948 -s friends,messages
-#    https://oauth.vk.com/blank.html#access_token=6f43877ecdad6211c7ff885712558b2c16e0b35f346501424e419ea3a44b7e5b496edca21033ed74f89dd&expires_in=86400&user_id=59914914
-#    config['VK_ACCESS_TOKEN'] == 
-
-
-def get(query, params={}, timeout=5, max_retries=5, backoff_factor=0.3):
+def get(query: str, params={}, timeout=5, max_retries=5, backoff_factor=0.3) -> Optional[Response]:
     """ Выполнить GET-запрос
     :param query: тело GET запроса
     :param timeout: максимальное время ожидания ответа от сервера
@@ -38,7 +29,7 @@ def get(query, params={}, timeout=5, max_retries=5, backoff_factor=0.3):
             time.sleep(backoff_value)
 
 
-def get_friends(user_id, fields=''):
+def get_friends(user_id: int, fields='') -> Response:
     """ Returns a list of user IDs or detailed\
     information about a user's friends """
     assert isinstance(user_id, int), "user_id must be positive integer"
@@ -46,7 +37,7 @@ def get_friends(user_id, fields=''):
     assert user_id > 0, "user_id must be positive integer"
     query_params = {
         'access_token': config.get("VK_ACCESS_TOKEN"),
-        'user_id': user_id,
+        'user_id': config.get("VK_ID"),
         'fields': fields,
         'v': config.get('VERSION')
     }
@@ -55,7 +46,7 @@ def get_friends(user_id, fields=''):
     return response.json()
 
 
-def get_message_history(user_id: int, offset=0, count=200) -> dict:
+def get_message_history(user_id: int, offset=0, count=200) -> Messages:
 
     assert isinstance(user_id, int), "user_id must be positive integer"
     assert user_id > 0, "user_id must be positive integer"
@@ -65,7 +56,7 @@ def get_message_history(user_id: int, offset=0, count=200) -> dict:
     query_params = {
         'domain': config.get("DOMAIN"),
         'access_token': config.get("VK_ACCESS_TOKEN"),
-        'user_id': user_id,
+        'user_id': config.get('VK_ID'),
         'offset': offset,
         'count': count,
         'version': config.get("VERSION")
