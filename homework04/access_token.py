@@ -28,5 +28,3 @@ if __name__ == "__main__":
     args = parser.parse_args()
     get_access_token(args.client_id, args.scope)
 
-
-#https://oauth.vk.com/blank.html#access_token=0f181d6190ce325403ac10ae1d594b6b71d952618eb9eb81c907ff16fb32a16b1de35b05471060801071d&expires_in=86400&user_id=59914914
