@@ -1,5 +1,5 @@
 # cs102
-CS102 Introduction to Python Programming. My version of it, anyways :)
+Лабораторные по предмету "Программирование" студентки Ушаковой К.Э. группы К3142. Преподаватель: Сорокин Д.С.
+_____________
 
-Kristina Ushakova
-K3142
+Сдавайте лабы вовремя
