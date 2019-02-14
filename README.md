@@ -4,7 +4,7 @@ A vinaigrette of programming homeworks for Programming course by ITMO's [D.S. So
 
 Explore the sandbox:
 
-../Semester1
+**../Semester1**
 
   [homework00](https://github.com/curiousfreckles/ITMO_programming/tree/master/homework00) - Hello World! Working environment setup. Task description [here](https://dementiy.github.io/2017/11/22/00-introduction/)
   
@@ -19,7 +19,7 @@ Explore the sandbox:
   [homework05](https://github.com/curiousfreckles/ITMO_programming/tree/master/homework05) - Task description [here](https://dementiy.github.io/2017/11/22/05-telegram-bot/)
     
     
-../Semester2
+**../Semester2**
   
   [homework06](https://github.com/curiousfreckles/ITMO_programming/tree/master/homework06) - Personalized news feed. Building a Bayesian classifier that will filter out the most personally relevant news from YCombinator. Task description [here](https://dementiy.github.io/2017/11/22/06-hackernews/)
 
