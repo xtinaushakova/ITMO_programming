@@ -3,16 +3,17 @@
 A vinaigrette of programming homeworks for Programming course by ITMO's [D.S. Sorokin](https://dementiy.github.io). More concise descriptions and a better README coming soon!
 
 ../
-  homework00 - 
   
-  homework01
+    homework00 - 
   
-  homework02
+    homework01
   
-  homework03
+    homework02
   
-  homework04
+    homework03
   
-  homework05
+    homework04
   
-  homework06
+    homework05
+  
+    homework06
