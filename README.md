@@ -1,5 +1,18 @@
-# cs102
-Лабораторные по предмету "Программирование" студентки Ушаковой К.Э. группы К3142. Преподаватель: Сорокин Д.С.
-_____________
+# ITMO ITGS Programming Labs
 
-Сдавайте лабы вовремя
+A vinaigrette of programming homeworks for Programming course by ITMO's [D.S. Sorokin](https://dementiy.github.io). More concise descriptions and a better README coming soon!
+
+../
+  homework00 - 
+  
+  homework01
+  
+  homework02
+  
+  homework03
+  
+  homework04
+  
+  homework05
+  
+  homework06
