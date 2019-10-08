@@ -23,8 +23,6 @@ Explore the sandbox:
 
   [homework06](https://github.com/curiousfreckles/ITMO_programming/tree/master/homework06) - Personalized HackerNews feed. Building a Bayesian classifier that will filter out the most personally relevant news from YCombinator. Task description [here](https://dementiy.github.io/2017/11/22/06-hackernews/)
 
-  [homework07](https://github.com/curiousfreckles/ITMO_programming/tree/master/homework07) - Task description [here]()
+  [homework11](https://github.com/curiousfreckles/ITMO_programming/tree/master/homework11) - Descriptive statistics with Pandas, SQL, R. Task description [here](https://dementiy.github.io/assignments/descriptive-statistics/)
 
-  [homework08](https://github.com/curiousfreckles/ITMO_programming/tree/master/homework08) - Task description [here]()
-
-  [homework09](https://github.com/curiousfreckles/ITMO_programming/tree/master/homework09) - Task description [here]()
+  [homework12](https://github.com/curiousfreckles/ITMO_programming/tree/master/homework12) - K-means and gradient descent analysis. Task description [here](https://dementiy.github.io/)
