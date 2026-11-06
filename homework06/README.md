@@ -15,9 +15,27 @@
 
 ## Установка зависимостей
 
-```pip install -r requirements.txt```
+Python 3.12+ is required. From `homework06`:
 
-```python -m nltk.downloader 'punkt'```
+```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
+
+Headlines use NLTK word tokenization without a downloaded sentence model.
+For optional stop-word removal or lemmatization, install only the required corpora:
+
+```bash
+python -m nltk.downloader stopwords wordnet
+```
+
+Run the offline dependency smoke tests from `homework06`:
+
+```bash
+python -m unittest discover -s tests -v
+```
 
 ## Запуск
 

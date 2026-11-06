@@ -1,4 +1,4 @@
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 from sqlalchemy import Column, String, Integer
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
@@ -6,7 +6,6 @@ from sqlalchemy import create_engine
 Base = declarative_base()
 engine = create_engine("sqlite:///data/news.db")
 session = sessionmaker(bind=engine)
-Base.metadata.create_all(bind=engine)
 
 
 class News(Base):
@@ -19,3 +18,6 @@ class News(Base):
     comments = Column(Integer)
     points = Column(Integer)
     label = Column(String)
+
+
+Base.metadata.create_all(bind=engine)

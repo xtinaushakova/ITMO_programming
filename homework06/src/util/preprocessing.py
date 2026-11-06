@@ -30,7 +30,7 @@ def clean(text):
 
     """
     # Разбиваем заголовок на слова.
-    tokens = [token.lower() for token in word_tokenize(text)]
+    tokens = [token.lower() for token in word_tokenize(text, preserve_line=True)]
 
     # Отделяем от каждого слова пунктуацию.
     table = str.maketrans('', '', string.punctuation)
