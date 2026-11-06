@@ -74,7 +74,7 @@ def add_label():
 
         # Получаем запись из БД с соответствующим id.
         s = session()
-        news_piece = s.query(News).get(news_id)
+        news_piece = s.get(News, news_id)
 
         # Меняем значение метки записи на новое значение.
         news_piece.label = label

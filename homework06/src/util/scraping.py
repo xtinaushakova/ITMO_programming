@@ -70,7 +70,7 @@ def extract_next_page(url: str) -> Tuple[List[Dict[str, Union[int, str]]], str]:
     """
     r = requests.get(url)
     page = BeautifulSoup(r.text, 'html.parser')
-    table = page.table.findAll('table')[1]
+    table = page.table.find_all('table')[1]
     tr = table.find_all('tr').pop()
     next_link = tr.find_all('td')[1].a['href']
     return (extract_news(BASE_URL + next_link), next_link)
@@ -102,7 +102,7 @@ def extract_news(url: str) -> List[Dict[str, Union[int, str]]]:
 
     r = requests.get(url)
     page = BeautifulSoup(r.text, 'html.parser')
-    table = page.table.findAll('table')[1]
+    table = page.table.find_all('table')[1]
 
     # Составим список всех тэгов <tr>, найденных во внутренней таблице.
     trs = table.find_all('tr')
