@@ -1,6 +1,8 @@
-requests==2.10.0
-PyTelegramBotAPI==3.6.6
-beautifulsoup4
-bs4
-html5lib
-datetime
+requests==2.34.2
+PyTelegramBotAPI==4.37.1
+beautifulsoup4==4.15.0
+soupsieve==4.0.1
+html5lib==1.1
+certifi==2026.10.23
+idna==3.20
+urllib3==2.8.0

@@ -1,9 +1,9 @@
 name: Homework06 dependency checks
 on:
   push:
-    paths: ['homework06/**', '.github/workflows/dependency-checks.yml']
+    paths: ['homework05/**', 'homework06/**', '.github/workflows/dependency-checks.yml']
   pull_request:
-    paths: ['homework06/**', '.github/workflows/dependency-checks.yml']
+    paths: ['homework05/**', 'homework06/**', '.github/workflows/dependency-checks.yml']
 permissions:
   contents: read
 jobs:
@@ -15,6 +15,23 @@ jobs:
     defaults:
       run:
         working-directory: homework06
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.1.0
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -r requirements.txt
+      - run: python -m pip check
+      - run: python -m unittest discover -s tests -v
+  smoke-homework05:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ['3.12', '3.14']
+    defaults:
+      run:
+        working-directory: homework05
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: actions/setup-python@v7.1.0
